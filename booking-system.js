@@ -40,6 +40,10 @@ async function startServer() {
   }
 }
 
+app.get('/', (req, res) => {
+  res.send('<h1>Booking System is Online</h1><p>Redis is connected and the engine is running!</p>');
+});
+
 // THE BOOKING LOGIC (Stays the same, it's good!)
 app.post("/api/book", async (req, res) => {
   const lockKey = "lock:seat";
