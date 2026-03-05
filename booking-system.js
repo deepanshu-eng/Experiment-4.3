@@ -5,8 +5,11 @@ const { v4: uuidv4 } = require("uuid");
 const app = express();
 app.use(express.json());
 
-const client = redis.createClient();
-client.connect();
+const client = redis.createClient({
+  url: process.env.REDIS_URL
+});
+
+client.connect().catch(console.error);;
 
 const TOTAL_SEATS = 100;
 const LOCK_TIMEOUT = 5; // seconds
@@ -65,6 +68,8 @@ app.post("/api/book", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log("Booking system running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Booking system running on port ${PORT}`);
 });
